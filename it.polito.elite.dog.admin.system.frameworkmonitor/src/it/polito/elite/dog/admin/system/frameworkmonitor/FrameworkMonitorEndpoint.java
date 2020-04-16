@@ -17,6 +17,10 @@
  */
 package it.polito.elite.dog.admin.system.frameworkmonitor;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import it.polito.elite.dog.admin.system.frameworkmonitor.api.FrameworkMonitor;
 import it.polito.elite.dog.admin.system.frameworkmonitor.model.DeviceStatsResponse;
 import it.polito.elite.dog.admin.system.frameworkmonitor.model.FrameworkMonitorResponse;
@@ -26,9 +30,6 @@ import it.polito.elite.dog.core.library.util.LogHelper;
 
 import javax.ws.rs.Path;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
@@ -62,10 +63,10 @@ public class FrameworkMonitorEndpoint implements FrameworkMonitor
 		// initialize the instance-wide object mapper
 		this.mapper = new ObjectMapper();
 		// set the mapper pretty printing
-		this.mapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);
+		this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		// avoid empty arrays and null values
-		this.mapper.configure(SerializationConfig.Feature.WRITE_EMPTY_JSON_ARRAYS, false);
-		this.mapper.setSerializationInclusion(Inclusion.NON_NULL);
+		this.mapper.configure(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS, false);
+		this.mapper.setSerializationInclusion(Include.NON_NULL);
 	}
 	
 	/**
